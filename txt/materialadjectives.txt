@@ -1,0 +1,4 @@
+metal
+wood
+plastic
+concrete
