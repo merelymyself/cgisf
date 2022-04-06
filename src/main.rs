@@ -7,8 +7,6 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Error;
 
-const LF: u8 = '\n' as u8;
-
 fn count_lines_better(filename:&str) -> i32 {
 	let file: BufReader<File> = BufReader::new(File::open(filename).expect("Unable to open file"));
 	let mut cnt  = 0;
@@ -78,7 +76,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 		structarray[cnt as usize]='p';
 	}
 	cnt = cnt + 1;
-	for i in 0..adverbs{
+	for _ in 0..adverbs{
 		structarray[cnt as usize]='a';
 		cnt = cnt + 1;
 	}
