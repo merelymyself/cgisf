@@ -28,8 +28,8 @@ fn get_word(firstletter:char) -> String {
 	let orderforfunction: [char;11] = ['n','s','p','O','S','A','C','M','t','i','a'];
 	let txtarray: [&str; 11] = ["./txt/nouns.txt", "./txt/singularnouns.txt", "./txt/pluralnouns.txt", "./txt/opinionadjectives.txt", "./txt/sizeadjectives.txt", "./txt/ageadjectives.txt", "./txt/colouradjectives.txt", "./txt/materialadjectives.txt", "./txt/transitiveverbs.txt", "./txt/intransitiveverbs.txt", "./txt/adverbs.txt"];
 	let mut wordtype: usize = 0;
-	if firstletter == 't' {
-		return String::from("the")
+	if firstletter == '0' {
+		return String::from("the");
 	}
 	else if firstletter == 'I' {
 		let mut rng = rand::thread_rng();
@@ -55,7 +55,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 	let mut rng = rand::thread_rng();
 	let mut cnt:i32 = 0;
 	if rng.gen_range(1..3) == 1 {
-		structarray[0] = 't';
+		structarray[0] = '0';
 		cnt = cnt + 1;
 	}
 	let mut plural:bool = true;
@@ -74,7 +74,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 			}
 		}
 	}
-	if structarray[0]=='t'{
+	if structarray[0]=='0'{
 		if rng.gen_range(1..3) == 1{
 			structarray[cnt as usize]='p';
 			plural = true;
