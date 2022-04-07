@@ -57,6 +57,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 	if rng.gen_range(1..3) == 1 {
 		structarray[0] = '0';
 		cnt = cnt + 1;
+		// Why is 'the' represented by a '0', you might ask? Because t is going to be used for transitive verbs. I hope.
 	}
 	let mut plural:bool = true;
 	let mut cnt2 = adjectives;
@@ -117,4 +118,5 @@ fn main() {
 		}
 	}
 	print!("\nType in 'cgisf h' for help.")
+	// I really need to add this in in the future.
 }
