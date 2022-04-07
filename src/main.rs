@@ -23,6 +23,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 		adjarray2[(5-cnt2) as usize] = adjarray[rng.gen_range(0..5)];
 		cnt2 = cnt2-1;
 	}
+	// Populates adjarray2 with the appropriate number of capital letters (representing adjectives).
 	for n in adjarray {
 		for m in adjarray2 {
 			if n == m {
@@ -31,6 +32,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 			}
 		}
 	}
+	// Ensures all the adjectives generated are present + maintains the unconscious order of adjectives.
 	if structarray[0]=='0'{
 		if rng.gen_range(1..3) == 1{
 			structarray[cnt as usize]='p';
@@ -40,6 +42,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 			plural = false;
 		}
 	}
+		// Maybe I should move plural-singular decision to above.
 	else {
 		structarray[cnt as usize]='p';
 	}
