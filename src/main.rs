@@ -1,54 +1,10 @@
+mod getword;
+use getword::get_word;
 use std::io;
 use std::vec;
 use std::str;
 use rand::Rng;
-use std::io::{BufRead, BufReader};
-use std::fs::File;
-use std::path::Path;
-use std::io::Error;
 use std::env;
-
-fn count_lines_better(filename:&str) -> i32 {
-	let file: BufReader<File> = BufReader::new(File::open(filename).expect("Unable to open file"));
-	let mut cnt  = 0;
-	for _ in file.lines() {
-		cnt = cnt + 1;
-	}
-	cnt
-}
-
-fn get_line_at(path: &Path, line_num: usize) -> Result<String, Error> {
-	let file = File::open(path).expect("File not found or cannot be opened");
-	let content = BufReader::new(&file);
-	let mut lines = content.lines();
-	lines.nth(line_num).expect("No line found at that position")
-}
-
-fn get_word(firstletter:char) -> String {
-	let orderforfunction: [char;11] = ['n','s','p','O','S','A','C','M','t','i','a'];
-	let txtarray: [&str; 11] = ["./txt/nouns.txt", "./txt/singularnouns.txt", "./txt/pluralnouns.txt", "./txt/opinionadjectives.txt", "./txt/sizeadjectives.txt", "./txt/ageadjectives.txt", "./txt/colouradjectives.txt", "./txt/materialadjectives.txt", "./txt/transitiveverbs.txt", "./txt/intransitiveverbs.txt", "./txt/adverbs.txt"];
-	let mut wordtype: usize = 0;
-	if firstletter == '0' {
-		return String::from("the");
-	}
-	else if firstletter == 'I' {
-		let mut rng = rand::thread_rng();
-		let outputnumber = rng.gen_range(1..(count_lines_better("./txt/intransitiveverbs.txt")));
-		let mut tempword = get_line_at(Path::new("./txt/intransitiveverbs.txt"),outputnumber as usize).expect("Error!");
-		tempword.push('s');
-		return tempword;
-	}
-	else {
-		for n in 0..11 {
-			if firstletter == orderforfunction[n] {
-				wordtype = n;
-			}
-		}
-		let mut rng = rand::thread_rng();
-		let outputnumber = rng.gen_range(1..(count_lines_better(txtarray[wordtype])));
-		get_line_at(Path::new(txtarray[wordtype]),outputnumber as usize).expect("Error!")
-	}
-}
 
 fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 	let mut structarray: [char; 15] = ['x';15];
