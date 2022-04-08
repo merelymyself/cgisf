@@ -18,10 +18,11 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 	let mut plural:bool = true;
 	let mut cnt2 = adjectives;
 	let adjarray = ['O','S','A','C','M'];
-	let mut adjarray2 = ['X';5];
+	let mut adjarray2 = ['X';16];
 	while cnt2!=0{
-		adjarray2[(5-cnt2) as usize] = adjarray[rng.gen_range(0..5)];
+		adjarray2[(16-cnt2) as usize] = adjarray[rng.gen_range(0..5)];
 		cnt2 = cnt2-1;
+		// Adjectives are limited to 16 at the present moment. Unfortunate.
 	}
 	// Populates adjarray2 with the appropriate number of capital letters (representing adjectives).
 	for n in adjarray {
@@ -71,11 +72,23 @@ fn string_cleanup(str:String) -> String {
 }
 
 fn main() {
-	let arguments: Vec<String> = env::args().collect();
-	if arguments[0] == "h"{
-
+	let mut arguments: Vec<String> = env::args().collect();
+	arguments.remove(0);
+	let mut values = [2,1];
+	let mut cnt = 0;
+	for arg in arguments{
+		if arg == "h" {
+			print!("Type in 'cgisf x y', where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. If you want it randomised, use '-'.");
+			return;
+		}
+		values[cnt] = arg.parse().expect("That is not a number.");
+		cnt = cnt + 1;
 	}
-	let y = get_structure(2, 1);
+	if values[0] > 16 {
+		print!("Please use less adjectives!");
+		return;
+	}
+	let y = get_structure(values[0], values[1]);
 	let y2: String = y.iter().collect();
 	println!("{}", y2);
 	let mut final_sentence = String::new();
@@ -91,6 +104,7 @@ fn main() {
 	}
 
 	print!("{}", string_cleanup(final_sentence));
-	print!("\nType in 'cgisf h' for help.")
+	print!("\nType in 'cgisf h' for help.");
 	// I really need to add this in in the future.
+	return;
 }
