@@ -60,6 +60,13 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 	structarray
 }
 
+fn string_cleanup(str:String) -> String {
+	let mut char_vec: Vec<char> = str.chars().collect();
+	char_vec[0] = char_vec[0].to_ascii_uppercase();
+	return char_vec.into_iter().collect();
+	// It's absolutely ridiculous how much work it takes to convert the first letter of a String to uppercase in Rust.
+}
+
 fn main() {
 	let arguments: Vec<String> = env::args().collect();
 	if arguments[0] == "h"{
@@ -68,14 +75,19 @@ fn main() {
 	let y = get_structure(2, 1);
 	let y2: String = y.iter().collect();
 	println!("{}", y2);
+	let mut final_sentence = String::new();
 	for letter in y {
 		if letter == 'x' {
 			break;
 		}
 		else {
-			print!("{} ", get_word(letter));
+			let mut word = get_word(letter);
+			word.push(' ');
+			final_sentence.push_str(&word);
 		}
 	}
+
+	print!("{}", string_cleanup(final_sentence));
 	print!("\nType in 'cgisf h' for help.")
 	// I really need to add this in in the future.
 }
