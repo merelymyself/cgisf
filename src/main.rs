@@ -63,8 +63,11 @@ fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
 fn string_cleanup(str:String) -> String {
 	let mut char_vec: Vec<char> = str.chars().collect();
 	char_vec[0] = char_vec[0].to_ascii_uppercase();
-	return char_vec.into_iter().collect();
 	// It's absolutely ridiculous how much work it takes to convert the first letter of a String to uppercase in Rust.
+	char_vec[(str.len()-1) as usize] = '.';
+	// I never want to touch this cleanup function again.
+	return char_vec.into_iter().collect();
+
 }
 
 fn main() {
