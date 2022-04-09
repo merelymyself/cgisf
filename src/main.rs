@@ -6,59 +6,56 @@ use std::str;
 use rand::Rng;
 use std::env;
 
-fn get_structure(adjectives:i32, adverbs:i32) -> [char;15] {
-	let mut structarray: [char; 15] = ['x';15];
+fn get_structure(adjectives:i32, adverbs:i32) -> Vec<char> {
+	let mut structarray:Vec<char> = Vec::new();
 	let mut rng = rand::thread_rng();
-	let mut cnt:i32 = 0;
+	let mut has_the:bool = false;
 	if rng.gen_range(1..3) == 1 {
-		structarray[0] = '0';
-		cnt = cnt + 1;
+		structarray.push('0');
+		has_the = true;
 		// Why is 'the' represented by a '0', you might ask? Because t is going to be used for transitive verbs. I hope.
 	}
 	let mut plural:bool = true;
-	let mut cnt2 = adjectives;
 	let adjarray = ['O','S','A','C','M'];
-	let mut adjarray2 = ['X';16];
-	while cnt2!=0{
-		adjarray2[(16-cnt2) as usize] = adjarray[rng.gen_range(0..5)];
-		cnt2 = cnt2-1;
-		// Adjectives are limited to 16 at the present moment. Unfortunate.
+	let mut adjarray2 = Vec::new();
+	for _ in 0..adjectives {
+		adjarray2.push(adjarray[rng.gen_range(0..5)]);
 	}
 	// Populates adjarray2 with the appropriate number of capital letters (representing adjectives).
 	for n in adjarray {
-		for m in adjarray2 {
-			if n == m {
-				structarray[cnt as usize]=n;
-				cnt = cnt + 1;
+		for m in &adjarray2 {
+			if &n == m {
+				structarray.push(n);
+				// incredible that an '&' will give me such grief. adjarray2 has to be borrowed to not affect it, in the non-existent future use case.
 			}
 		}
 	}
 	// Ensures all the adjectives generated are present + maintains the unconscious order of adjectives.
-	if structarray[0]=='0'{
+	if has_the==true{
+		// I will no doubt regret this scuffed implementation of a "has the word 'the'" check in the future.
 		if rng.gen_range(1..3) == 1{
-			structarray[cnt as usize]='p';
+			structarray.push('p');
 			plural = true;
 		} else {
-			structarray[cnt as usize]='s';
+			structarray.push('s');
 			plural = false;
 		}
 	}
 		// Maybe I should move plural-singular decision to above.
 	else {
-		structarray[cnt as usize]='p';
+		structarray.push('p');
 	}
-	cnt = cnt + 1;
 	for _ in 0..adverbs{
-		structarray[cnt as usize]='a';
-		cnt = cnt + 1;
+		structarray.push('a');
 	}
 	if plural == true {
-		structarray[cnt as usize]='i';
+		structarray.push('i');
 	}
 	else {
-		structarray[cnt as usize] = 'I';
+		structarray.push('I');
 	}
-	structarray
+	structarray.push('x');
+	return structarray;
 }
 
 fn string_cleanup(str:String) -> String {
@@ -68,7 +65,6 @@ fn string_cleanup(str:String) -> String {
 	char_vec[(str.len()-1) as usize] = '.';
 	// I never want to touch this cleanup function again.
 	return char_vec.into_iter().collect();
-
 }
 
 fn main() {
