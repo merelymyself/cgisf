@@ -77,12 +77,15 @@ fn main() {
 			print!("Type in 'cgisf x y', where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. If you want it randomised, use '-'.");
 			return;
 		}
-		values[cnt] = arg.parse().expect("That is not a number.");
-		cnt = cnt + 1;
-	}
-	if values[0] > 16 {
-		print!("Please use less adjectives!");
-		return;
+		if arg == "-" {
+			let mut rng = rand::thread_rng();
+			values[cnt] = rng.gen_range(1..4);
+			cnt = cnt + 1;
+		}
+		else {
+			values[cnt] = arg.parse().expect("That is not a number.");
+			cnt = cnt + 1;
+		}
 	}
 	let y = get_structure(values[0], values[1]);
 	let y2: String = y.iter().collect();
