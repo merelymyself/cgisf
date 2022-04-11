@@ -1,8 +1,5 @@
 mod getword;
 use getword::get_word;
-use std::io;
-use std::vec;
-use std::str;
 use rand::Rng;
 use std::env;
 
@@ -67,7 +64,17 @@ fn string_cleanup(str:String) -> String {
 	return char_vec.into_iter().collect();
 }
 
-fn main() {
+fn main() {/*
+	let adverbs = include_bytes!("adverbs.txt");
+	let ageadjectives = include_bytes!("ageadjectives.txt");
+	let colouradjectives = include_bytes!("colouradjectives.txt");
+	let intransitiveverbs = include_bytes!("intransitiveverbs.txt");
+	let materialadjectives = include_bytes!("materialadjectives.txt");
+	let nouns = include_bytes!("nouns.txt");
+	let opinionadjectives = include_bytes!("opinionadjectives.txt");
+	let pluralnouns = include_bytes!("nouns.txt");
+	let singularnouns = include_bytes!("singularnouns.txt");
+	let sizeadjectives = include_bytes!("sizeadjectives.txt"); */
 	let mut arguments: Vec<String> = env::args().collect();
 	arguments.remove(0);
 	let mut values = [2,1];

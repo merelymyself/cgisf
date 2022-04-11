@@ -5,7 +5,7 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Error;
 
-fn count_lines_better(filename:&str) -> i32 {
+/*fn count_lines_better(filename:&str) -> i32 {
     let file: BufReader<File> = BufReader::new(File::open(filename).expect("Unable to open file"));
     let mut cnt  = 0;
     for _ in file.lines() {
@@ -19,6 +19,22 @@ fn get_line_at(path: &Path, line_num: usize) -> Result<String, Error> {
     let content = BufReader::new(&file);
     let mut lines = content.lines();
     lines.nth(line_num).expect("No line found at that position")
+}
+*/
+
+fn count_lines_string(str:&String) -> i32 {
+    let mut lines = str.lines();
+    return lines.count() as i32;
+}
+
+fn get_word_no(count:i32, str:&String) -> String {
+    let mut count2 = count - 1;
+    let mut lines = str.lines();
+    while count2 != 0 {
+        lines.next();
+        count2 = count2 - 1;
+    }
+    return lines.next().unwrap().to_string();
 }
 
 /*
@@ -39,18 +55,23 @@ I - intransitive verb, except for the singular form - aka 'coders code' vs 'code
  */
 
 pub fn get_word(firstletter:char) -> String {
-    let orderforfunction: [char;11] = ['n','s','p','O','S','A','C','M','t','i','a'];
-    let txtarray: [&str; 11] = ["./txt/nouns.txt", "./txt/singularnouns.txt", "./txt/pluralnouns.txt", "./txt/opinionadjectives.txt", "./txt/sizeadjectives.txt", "./txt/ageadjectives.txt", "./txt/colouradjectives.txt", "./txt/materialadjectives.txt", "./txt/transitiveverbs.txt", "./txt/intransitiveverbs.txt", "./txt/adverbs.txt"];
+    let orderforfunction: [char;11] = ['a','A','C','i','M','n','O','p','s','S','t'];
+    let words = [String::from_utf8(include_bytes!("adverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("ageadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("colouradjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("intransitiveverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("materialadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("nouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("opinionadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("pluralnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("singularnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("sizeadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("transitiveverbs.txt").to_vec()).expect("error")];
     let mut wordtype: usize = 0;
     if firstletter == '0' {
         return String::from("the");
     }
     else if firstletter == 'I' {
-        let mut rng = rand::thread_rng();
+        /*let mut rng = rand::thread_rng();
         let outputnumber = rng.gen_range(1..(count_lines_better("./txt/intransitiveverbs.txt")));
-        let mut tempword = get_line_at(Path::new("./txt/intransitiveverbs.txt"),outputnumber as usize).expect("Error!");
+        let mut tempword = get_line_at(Path::new("intransitiveverbs.txt"), outputnumber as usize).expect("Error!");
         tempword.push('s');
-        return tempword;
+        return tempword;*/
+        let mut rng = rand::thread_rng();
+        let outputnumber = rng.gen_range(1..(count_lines_string(&words[3])));
+        let mut word = get_word_no(outputnumber, &words[3]);
+        word.push('s');
+        return word;
     }
     else {
         for n in 0..11 {
@@ -59,7 +80,7 @@ pub fn get_word(firstletter:char) -> String {
             }
         }
         let mut rng = rand::thread_rng();
-        let outputnumber = rng.gen_range(1..(count_lines_better(txtarray[wordtype])));
-        get_line_at(Path::new(txtarray[wordtype]),outputnumber as usize).expect("Error!")
+        let outputnumber = rng.gen_range(1..(count_lines_string(&words[wordtype])));
+        return get_word_no(outputnumber, &words[wordtype]);
     }
 }
