@@ -68,7 +68,7 @@ pub fn get_word(firstletter:char) -> String {
         tempword.push('s');
         return tempword;*/
         let mut rng = rand::thread_rng();
-        let outputnumber = rng.gen_range(1..(count_lines_string(&words[3])));
+        let outputnumber = rng.gen_range(1..(count_lines_string(&words[3])+1));
         let mut word = get_word_no(outputnumber, &words[3]);
         word.push('s');
         return word;
@@ -80,7 +80,7 @@ pub fn get_word(firstletter:char) -> String {
             }
         }
         let mut rng = rand::thread_rng();
-        let outputnumber = rng.gen_range(1..(count_lines_string(&words[wordtype])));
+        let outputnumber = rng.gen_range(1..(count_lines_string(&words[wordtype])+1));
         return get_word_no(outputnumber, &words[wordtype]);
     }
 }

@@ -81,7 +81,7 @@ fn main() {/*
 	let mut cnt = 0;
 	for arg in arguments{
 		if arg == "h" {
-			print!("Type in 'cgisf x y', where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. If you want it randomised, use '-'.");
+			print!("Takes in arguments of x y, where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. If you want it randomised, use '-'.");
 			return;
 		}
 		if arg == "-" {
@@ -110,7 +110,7 @@ fn main() {/*
 	}
 
 	print!("{}", string_cleanup(final_sentence));
-	print!("\nType in 'cgisf h' for help.");
+	print!("\nArgument 'h' for help.");
 	// I really need to add this in in the future.
 	return;
 }
