@@ -1,9 +1,4 @@
-use std::str;
 use rand::Rng;
-use std::io::{BufRead, BufReader};
-use std::fs::File;
-use std::path::Path;
-use std::io::Error;
 
 /*fn count_lines_better(filename:&str) -> i32 {
     let file: BufReader<File> = BufReader::new(File::open(filename).expect("Unable to open file"));
@@ -23,7 +18,7 @@ fn get_line_at(path: &Path, line_num: usize) -> Result<String, Error> {
 */
 
 fn count_lines_string(str:&String) -> i32 {
-    let mut lines = str.lines();
+    let lines = str.lines();
     return lines.count() as i32;
 }
 
