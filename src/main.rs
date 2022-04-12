@@ -3,11 +3,11 @@ use getword::get_word;
 use rand::Rng;
 use std::env;
 
-fn get_structure(adjectives:i32, adverbs:i32) -> Vec<char> {
+fn get_structure1(adjectives:i32, adverbs:i32) -> Vec<char> {
 	let mut structarray:Vec<char> = Vec::new();
 	let mut rng = rand::thread_rng();
 	let mut has_the:bool = false;
-	if rng.gen_range(1..3) == 1 {
+	if rng.gen_bool(0.5) {
 		structarray.push('0');
 		has_the = true;
 		// Why is 'the' represented by a '0', you might ask? Because t is going to be used for transitive verbs. I hope.
@@ -30,7 +30,7 @@ fn get_structure(adjectives:i32, adverbs:i32) -> Vec<char> {
 	// Ensures all the adjectives generated are present + maintains the unconscious order of adjectives.
 	if has_the==true{
 		// I will no doubt regret this scuffed implementation of a "has the word 'the'" check in the future.
-		if rng.gen_range(1..3) == 1{
+		if rng.gen_bool(0.5){
 			structarray.push('p');
 			plural = true;
 		} else {
@@ -94,7 +94,7 @@ fn main() {/*
 			cnt = cnt + 1;
 		}
 	}
-	let y = get_structure(values[0], values[1]);
+	let y = get_structure1(values[0], values[1]);
 	let y2: String = y.iter().collect();
 	println!("{}", y2);
 	let mut final_sentence = String::new();
