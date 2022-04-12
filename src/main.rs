@@ -1,59 +1,10 @@
 mod getword;
+mod getstructure;
+use getstructure::get_structure;
 use getword::get_word;
 use rand::Rng;
 use std::env;
 
-fn get_structure1(adjectives:i32, adverbs:i32) -> Vec<char> {
-	let mut structarray:Vec<char> = Vec::new();
-	let mut rng = rand::thread_rng();
-	let mut has_the:bool = false;
-	if rng.gen_bool(0.5) {
-		structarray.push('0');
-		has_the = true;
-		// Why is 'the' represented by a '0', you might ask? Because t is going to be used for transitive verbs. I hope.
-	}
-	let mut plural:bool = true;
-	let adjarray = ['O','S','A','C','M'];
-	let mut adjarray2 = Vec::new();
-	for _ in 0..adjectives {
-		adjarray2.push(adjarray[rng.gen_range(0..5)]);
-	}
-	// Populates adjarray2 with the appropriate number of capital letters (representing adjectives).
-	for n in adjarray {
-		for m in &adjarray2 {
-			if &n == m {
-				structarray.push(n);
-				// incredible that an '&' will give me such grief. adjarray2 has to be borrowed to not affect it, in the non-existent future use case.
-			}
-		}
-	}
-	// Ensures all the adjectives generated are present + maintains the unconscious order of adjectives.
-	if has_the==true{
-		// I will no doubt regret this scuffed implementation of a "has the word 'the'" check in the future.
-		if rng.gen_bool(0.5){
-			structarray.push('p');
-			plural = true;
-		} else {
-			structarray.push('s');
-			plural = false;
-		}
-	}
-		// Maybe I should move plural-singular decision to above.
-	else {
-		structarray.push('p');
-	}
-	for _ in 0..adverbs{
-		structarray.push('a');
-	}
-	if plural == true {
-		structarray.push('i');
-	}
-	else {
-		structarray.push('I');
-	}
-	structarray.push('x');
-	return structarray;
-}
 
 fn string_cleanup(str:String) -> String {
 	let mut char_vec: Vec<char> = str.chars().collect();
@@ -77,24 +28,44 @@ fn main() {/*
 	let sizeadjectives = include_bytes!("sizeadjectives.txt"); */
 	let mut arguments: Vec<String> = env::args().collect();
 	arguments.remove(0);
-	let mut values = [2,1];
+	let mut values = [2,1,1];
+	let mut plural:bool = true;
 	let mut cnt = 0;
 	for arg in arguments{
 		if arg == "h" {
-			print!("Takes in arguments of x y, where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. If you want it randomised, use '-'.");
+			print!("Takes in arguments of x y structure plural/singular, where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. \nStructural argument is in the form of an integer, listed below. Defaults to structure 1. \nTo indicate plural or singular, use 'p' or 's' respectively. Defaults to plural. \nIf you want ANY value randomised, use '-'.");
 			return;
 		}
 		if arg == "-" {
-			let mut rng = rand::thread_rng();
-			values[cnt] = rng.gen_range(1..4);
-			cnt = cnt + 1;
+			if cnt == 0 || cnt == 1 {
+				let mut rng = rand::thread_rng();
+				values[cnt] = rng.gen_range(1..4);
+				cnt = cnt + 1;
+			}
+			if cnt == 2 {
+				let mut rng = rand::thread_rng();
+				values[cnt] = rng.gen_range(1..3);
+				cnt = cnt + 1;
+			}
+			if cnt == 3 {
+				let mut rng = rand::thread_rng();
+				plural = rng.gen_bool(0.5);
+			}
+		}
+		if cnt == 3 {
+			if arg=="p"{
+				plural = true;
+			}
+			if arg=="s"{
+				plural = false;
+			}
 		}
 		else {
-			values[cnt] = arg.parse().expect("That is not a number.");
+			values[cnt] = arg.parse().expect("Incorrect argument submitted.");
 			cnt = cnt + 1;
 		}
 	}
-	let y = get_structure1(values[0], values[1]);
+	let y = get_structure(values[0], values[1], plural, values[2]);
 	let y2: String = y.iter().collect();
 	println!("{}", y2);
 	let mut final_sentence = String::new();
