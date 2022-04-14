@@ -28,31 +28,35 @@ fn main() {/*
 	let sizeadjectives = include_bytes!("sizeadjectives.txt"); */
 	let mut arguments: Vec<String> = env::args().collect();
 	arguments.remove(0);
-	let mut values = [2,1,1];
+	let mut values = [2,1,1,1,1];
 	let mut plural:bool = true;
+	let mut plural2:bool = true;
 	let mut cnt = 0;
 	for arg in arguments{
 		if arg == "h" {
-			print!("Takes in arguments of x y structure plural/singular, where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. \nStructural argument is in the form of an integer, listed below. Defaults to structure 1. \nTo indicate plural or singular, use 'p' or 's' respectively. Defaults to plural. \nIf you want ANY value randomised, use '-'.");
+			print!("Takes in arguments of x y structure plural/singular z plural/singular, where x is the number of adjectives and y is the number of adverbs. Defaults to 2, 1 respectively if nothing typed in. \nStructural argument is in the form of an integer, listed below. Defaults to structure 1.\nTo indicate plural or singular, use 'p' or 's' respectively. Defaults to plural.\nIf you are calling for a transitive sentence, use z to decide the number of adjectives of the second noun. Defaults to 1.\nIf you are calling for a transitive sentence, use the second 'p' and 's' to decide the plural/singular of the second noun. \nIf you want ANY value randomised, use '-'.");
 			return;
 		}
+		// adjectives1 adverbs1 structuretype plurality adjectives2 plurality2
 		if arg == "-" {
-			if cnt == 0 || cnt == 1 {
+			if cnt == 0 || cnt == 1 || cnt == 4 {
 				let mut rng = rand::thread_rng();
 				values[cnt] = rng.gen_range(1..4);
-				cnt = cnt + 1;
 			}
 			if cnt == 2 {
 				let mut rng = rand::thread_rng();
-				values[cnt] = rng.gen_range(1..3);
-				cnt = cnt + 1;
+				values[cnt] = rng.gen_range(1..4);
 			}
 			if cnt == 3 {
 				let mut rng = rand::thread_rng();
 				plural = rng.gen_bool(0.5);
 			}
+			if cnt == 5 {
+				let mut rng = rand::thread_rng();
+				plural2 = rng.gen_bool(0.5);
+			}
 		}
-		if cnt == 3 {
+		else if cnt == 3 {
 			if arg=="p"{
 				plural = true;
 			}
@@ -60,12 +64,20 @@ fn main() {/*
 				plural = false;
 			}
 		}
+		else if cnt == 5 {
+			if arg=="p"{
+				plural2 = true;
+			}
+			if arg=="s"{
+				plural2 = false;
+			}
+		}
 		else {
 			values[cnt] = arg.parse().expect("Incorrect argument submitted.");
-			cnt = cnt + 1;
 		}
+		cnt = cnt + 1;
 	}
-	let y = get_structure(values[0], values[1], plural, values[2]);
+	let y = get_structure(values[0], values[1], values[2], plural,values[4], plural2);
 	let y2: String = y.iter().collect();
 	println!("{}", y2);
 	let mut final_sentence = String::new();
