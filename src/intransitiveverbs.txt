@@ -116,7 +116,6 @@ burst
 bury
 bust
 buy
-buze
 calculate
 call
 camp

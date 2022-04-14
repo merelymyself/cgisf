@@ -68,7 +68,7 @@ pub fn get_word(firstletter:char) -> String {
         if &word[word.len()-2..word.len()] == &String::from("sh") || word.chars().last().unwrap() == 'x'{
             word.push('e');
         }
-        // rush -> rushes. Previously, rush -> rushs.
+        // rush -> rushes. Previously, rush -> rushs. Similar for box -> boxes
         word.push('s');
         return word;
     }
