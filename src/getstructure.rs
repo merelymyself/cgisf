@@ -51,10 +51,10 @@ fn get_ending_structure2(adverbs:i32, plural:bool, exstruct:Vec<char>) -> Vec<ch
         structarray.push('a');
     }
     if plural == true {
-        structarray.push('i');
+        structarray.push('v');
     }
     else {
-        structarray.push('I');
+        structarray.push('V');
     }
     structarray.push('x');
     return structarray;

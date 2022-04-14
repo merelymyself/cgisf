@@ -50,30 +50,30 @@ I - intransitive verb, except for the singular form - aka 'coders code' vs 'code
  */
 
 pub fn get_word(firstletter:char) -> String {
-    let orderforfunction: [char;11] = ['a','A','C','i','M','n','O','p','s','S','t'];
-    let words = [String::from_utf8(include_bytes!("adverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("ageadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("colouradjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("intransitiveverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("materialadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("nouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("opinionadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("pluralnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("singularnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("sizeadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("transitiveverbs.txt").to_vec()).expect("error")];
+    let orderforfunction: [char;10] = ['a','A','C','v','M','n','O','p','s','S'];
+    let words = [String::from_utf8(include_bytes!("adverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("ageadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("colouradjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("verbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("materialadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("nouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("opinionadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("pluralnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("singularnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("sizeadjectives.txt").to_vec()).expect("error")];
     let mut wordtype: usize = 0;
     if firstletter == '0' {
         return String::from("the");
     }
-    else if firstletter == 'I' {
+    else if firstletter == 'V' {
         /*let mut rng = rand::thread_rng();
-        let outputnumber = rng.gen_range(1..(count_lines_better("./txt/intransitiveverbs.txt")));
-        let mut tempword = get_line_at(Path::new("intransitiveverbs.txt"), outputnumber as usize).expect("Error!");
+        let outputnumber = rng.gen_range(1..(count_lines_better("./txt/verbs.txt")));
+        let mut tempword = get_line_at(Path::new("verbs.txt"), outputnumber as usize).expect("Error!");
         tempword.push('s');
         return tempword;*/
         let mut rng = rand::thread_rng();
         let outputnumber = rng.gen_range(1..(count_lines_string(&words[3])+1));
         let mut word = get_word_no(outputnumber, &words[3]);
-        if &word[word.len()-2..word.len()] == &String::from("sh") || word.chars().last().unwrap() == 'x'{
+        if &word[word.len()-2..word.len()] == &String::from("sh") || word.chars().last().unwrap() == 'x' || word.chars().last().unwrap() == 's'{
             word.push('e');
         }
-        // rush -> rushes. Previously, rush -> rushs. Similar for box -> boxes
+        // rush -> rushes. Previously, rush -> rushs. Similar for box -> boxes. Toss -> tosses.
         word.push('s');
         return word;
     }
     else {
-        for n in 0..11 {
+        for n in 0..10 {
             if firstletter == orderforfunction[n] {
                 wordtype = n;
             }

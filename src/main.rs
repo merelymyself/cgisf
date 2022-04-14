@@ -19,7 +19,7 @@ fn main() {/*
 	let adverbs = include_bytes!("adverbs.txt");
 	let ageadjectives = include_bytes!("ageadjectives.txt");
 	let colouradjectives = include_bytes!("colouradjectives.txt");
-	let intransitiveverbs = include_bytes!("intransitiveverbs.txt");
+	let intransitiveverbs = include_bytes!("verbs.txt");
 	let materialadjectives = include_bytes!("materialadjectives.txt");
 	let nouns = include_bytes!("nouns.txt");
 	let opinionadjectives = include_bytes!("opinionadjectives.txt");
