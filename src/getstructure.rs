@@ -33,10 +33,10 @@ fn get_starting_structure1(adjectives:i32, plural:bool) -> Vec<char> {
 fn get_ending_structure1(adverbs:i32, plural:bool, ex_struct:Vec<char>) -> Vec<char> {
     let mut struct_array = ex_struct;
     if plural == true {
-        struct_array.push('i');
+        struct_array.push('v');
     }
     else {
-        struct_array.push('I');
+        struct_array.push('V');
     }
     for _ in 0..adverbs{
         struct_array.push('a');
