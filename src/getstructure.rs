@@ -96,6 +96,42 @@ fn get_ending_structure3(adverbs:i32, plural:bool, adjectives2:i32, plural2:bool
     return struct_array;
 }
 
+fn get_ending_structure4(adverbs:i32, plural:bool, adjectives2:i32, plural2:bool, ex_struct:Vec<char>) -> Vec<char> {
+    let mut rng = rand::thread_rng();
+    let mut struct_array = ex_struct;
+    for _ in 0..adverbs {
+        struct_array.push('a');
+    }
+    if plural == true {
+        struct_array.push('v');
+    }
+    else {
+        struct_array.push('V');
+    }
+    if plural2 == false || rng.gen_bool(0.5) {
+        struct_array.push('0');
+    }
+    let adj_array = ['O','S','A','C','M'];
+    let mut adj_array2 = Vec::new();
+    for _ in 0..adjectives2 {
+        adj_array2.push(adj_array[rng.gen_range(0..5)]);
+    }
+    for n in adj_array {
+        for m in &adj_array2 {
+            if &n == m {
+                struct_array.push(n);
+            }
+        }
+    }
+    if plural2 == true {
+        struct_array.push('p');
+    } else {
+        struct_array.push('s');
+    }
+    struct_array.push('x');
+    return struct_array;
+}
+
 pub fn get_structure(adjectives:i32, adverbs:i32, structure:i32, plural:bool, adjectives2:i32, plural2:bool) -> Vec<char>{
     return if structure == 1 {
         get_ending_structure1(adverbs, plural, get_starting_structure1(adjectives, plural))
@@ -103,6 +139,8 @@ pub fn get_structure(adjectives:i32, adverbs:i32, structure:i32, plural:bool, ad
         get_ending_structure2(adverbs, plural, get_starting_structure1(adjectives, plural))
     } else if structure == 3 {
         get_ending_structure3(adverbs, plural, adjectives2,plural2, get_starting_structure1(adjectives, plural))
+    } else if structure == 4 {
+        get_ending_structure4(adverbs, plural, adjectives2,plural2, get_starting_structure1(adjectives, plural))
     } else {
         Vec::from(['x'])
     }

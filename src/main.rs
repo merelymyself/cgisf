@@ -45,7 +45,7 @@ fn main() {/*
 			}
 			if cnt == 2 {
 				let mut rng = rand::thread_rng();
-				values[cnt] = rng.gen_range(1..4);
+				values[cnt] = rng.gen_range(1..5);
 			}
 			if cnt == 3 {
 				let mut rng = rand::thread_rng();
