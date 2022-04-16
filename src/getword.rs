@@ -43,14 +43,14 @@ A - age adjective
 C - colour adjective
 M - material adjective
 t - transitive verbs, aka noun verb noun.
-i - intransitive verbs, aka noun verb.
+v - verbs, aka noun verb.
 a - adverbs
 0 - 'the', couldn't think of any other way to implement it.
-I - intransitive verb, except for the singular form - aka 'coders code' vs 'coder codes'
+V - verb, except for the singular form - aka 'coders code' vs 'coder codes': this is the latter
  */
 
 pub fn get_word(firstletter:char) -> String {
-    let orderforfunction: [char;10] = ['a','A','C','v','M','n','O','p','s','S'];
+    let orderforfunction: [char; 10] = ['a', 'A', 'C', 'v', 'M', 'n', 'O', 'p', 's', 'S'];
     let words = [String::from_utf8(include_bytes!("adverbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("ageadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("colouradjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("verbs.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("materialadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("nouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("opinionadjectives.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("pluralnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("singularnouns.txt").to_vec()).expect("error"), String::from_utf8(include_bytes!("sizeadjectives.txt").to_vec()).expect("error")];
     let mut wordtype: usize = 0;
     return if firstletter == '0' {
@@ -70,6 +70,31 @@ pub fn get_word(firstletter:char) -> String {
         // rush -> rushes. Previously, rush -> rushs. Similar for box -> boxes. Toss -> tosses.
         word.push('s');
         word
+    } else if firstletter == 'p'{
+        let mut rng = rand::thread_rng();
+        if rng.gen_bool((count_lines_string(&words[7])) as f64/(((count_lines_string(&words[7])) as f64)+((count_lines_string(&words[5])) as f64))){
+            let outputnumber = rng.gen_range(1..(count_lines_string(&words[7]) + 1));
+            let word = get_word_no(outputnumber, &words[7]);
+            word
+        }
+        else {
+            let outputnumber = rng.gen_range(1..(count_lines_string(&words[5]) + 1));
+            let mut word = get_word_no(outputnumber, &words[5]);
+            word.push('s');
+            word
+        }
+    } else if firstletter == 's'{
+        let mut rng = rand::thread_rng();
+        if rng.gen_bool((count_lines_string(&words[8])) as f64/(((count_lines_string(&words[8])) as f64)+((count_lines_string(&words[5])) as f64))){
+            let outputnumber = rng.gen_range(1..(count_lines_string(&words[8]) + 1));
+            let word = get_word_no(outputnumber, &words[8]);
+            word
+        }
+        else {
+            let outputnumber = rng.gen_range(1..(count_lines_string(&words[5]) + 1));
+            let word = get_word_no(outputnumber, &words[5]);
+            word
+        }
     } else {
         for n in 0..10 {
             if firstletter == orderforfunction[n] {
