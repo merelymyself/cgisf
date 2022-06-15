@@ -11,7 +11,7 @@ fn string_cleanup(str: String) -> String {
     // It's absolutely ridiculous how much work it takes to convert the first letter of a String to uppercase in Rust.
     char_vec[(str.len() - 1) as usize] = '.';
     // I never want to touch this cleanup function again.
-    return char_vec.into_iter().collect();
+    char_vec.into_iter().collect()
 }
 
 /// A random sentence generator.
@@ -19,7 +19,7 @@ fn string_cleanup(str: String) -> String {
 #[clap(author, version, about, long_about = None)]
 struct Args {
     /// Number of adjectives in the first portion of the sentence
-    #[clap(short = 'j', long = "adjectives", value_parser, default_value_t = 2)]
+    #[clap(short = 'a', long = "adjectives", value_parser, default_value_t = 2)]
     adjectives1: i32,
     /// Number of adverbs in the first portion of the sentence
     #[clap(short = 'v', long = "adverbs", value_parser, default_value_t = 1)]
@@ -117,7 +117,5 @@ fn main() {
             final_sentence.push_str(&word);
         }
     }
-
     print!("{}", string_cleanup(final_sentence));
-    return;
 }

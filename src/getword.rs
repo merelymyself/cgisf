@@ -17,19 +17,19 @@ fn get_line_at(path: &Path, line_num: usize) -> Result<String, Error> {
 }
 */
 
-fn count_lines_string(str: &String) -> i32 {
+fn count_lines_string(str: &str) -> i32 {
     let lines = str.lines();
-    return lines.count() as i32;
+    lines.count() as i32
 }
 
-fn get_word_no(count: i32, str: &String) -> String {
+fn get_word_no(count: i32, str: &str) -> String {
     let mut count2 = count - 1;
     let mut lines = str.lines();
     while count2 != 0 {
         lines.next();
-        count2 = count2 - 1;
+        count2 -= 1;
     }
-    return lines.next().unwrap().to_string();
+    lines.next().unwrap().to_string()
 }
 
 /*
@@ -64,7 +64,7 @@ pub fn get_word(firstletter: char) -> String {
         String::from_utf8(include_bytes!("sizeadjectives.txt").to_vec()).expect("error"),
     ];
     let mut wordtype: usize = 0;
-    return if firstletter == '0' {
+    if firstletter == '0' {
         String::from("the")
     } else if firstletter == 'V' {
         /*let mut rng = rand::thread_rng();
@@ -75,9 +75,9 @@ pub fn get_word(firstletter: char) -> String {
         let mut rng = rand::thread_rng();
         let outputnumber = rng.gen_range(1..(count_lines_string(&words[3]) + 1));
         let mut word = get_word_no(outputnumber, &words[3]);
-        if &word[word.len() - 2..word.len()] == &String::from("sh")
-            || word.chars().last().unwrap() == 'x'
-            || word.chars().last().unwrap() == 's'
+        if word[word.len() - 2..word.len()] == *"sh"
+            || word.ends_with('x')
+            || word.ends_with('s')
         {
             word.push('e');
         }
@@ -92,8 +92,8 @@ pub fn get_word(firstletter: char) -> String {
                     + ((count_lines_string(&words[5])) as f64)),
         ) {
             let outputnumber = rng.gen_range(1..(count_lines_string(&words[7]) + 1));
-            let word = get_word_no(outputnumber, &words[7]);
-            word
+
+            get_word_no(outputnumber, &words[7])
         } else {
             let outputnumber = rng.gen_range(1..(count_lines_string(&words[5]) + 1));
             let mut word = get_word_no(outputnumber, &words[5]);
@@ -108,21 +108,21 @@ pub fn get_word(firstletter: char) -> String {
                     + ((count_lines_string(&words[5])) as f64)),
         ) {
             let outputnumber = rng.gen_range(1..(count_lines_string(&words[8]) + 1));
-            let word = get_word_no(outputnumber, &words[8]);
-            word
+
+            get_word_no(outputnumber, &words[8])
         } else {
             let outputnumber = rng.gen_range(1..(count_lines_string(&words[5]) + 1));
-            let word = get_word_no(outputnumber, &words[5]);
-            word
+
+            get_word_no(outputnumber, &words[5])
         }
     } else {
-        for n in 0..10 {
-            if firstletter == orderforfunction[n] {
+        for (n, order) in orderforfunction.iter().enumerate() {
+            if firstletter == *order {
                 wordtype = n;
             }
         }
         let mut rng = rand::thread_rng();
         let outputnumber = rng.gen_range(1..(count_lines_string(&words[wordtype]) + 1));
         get_word_no(outputnumber, &words[wordtype])
-    };
+    }
 }
