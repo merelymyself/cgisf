@@ -14,7 +14,7 @@ fn string_cleanup(str: String) -> String {
     char_vec.into_iter().collect()
 }
 
-/// A random sentence generator.
+/// A random sentence generator. Use -1 as the argument to randomise values.
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
@@ -53,6 +53,9 @@ struct Args {
     /// Whether the second noun is plural. 0 is false and 1 is true. No effect if sentence structure is 3 or 4.
     #[clap(short = 'P', long = "plural_two", value_parser, default_value_t = 0)]
     plurality2: i32,
+    /// Whether it should be presented as a greeter
+    #[clap(short = 'g', long = "greeter", value_parser)]
+    greeter: bool,
 }
 
 fn main() {
